@@ -11,6 +11,7 @@ const registerHandler = async (req, res) => {
     email,
     password: hashPassword,
   });
+  console.log(user);
   res.json({ user }).status(httpStatus.CREATED);
 };
 

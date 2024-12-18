@@ -5,7 +5,7 @@ import { checkAuth } from "../utils";
 export const todoRouter = express.Router();
 
 // Route to create a new Todo
-todoRouter.post("/create", TodoController.createTodoController);
+todoRouter.post("/create", checkAuth, TodoController.createTodoController);
 
 // Route to get all Todos
 // todoRouter.get("/todos", TodoController.getAllTodosController);

@@ -5,7 +5,7 @@ export class TodoEntity {
   @PrimaryGeneratedColumn("uuid")
   todoid: string;
 
-  @Column({ type: "varchar", nullable: false })
+  @Column({ type: "varchar", nullable: false, name: "user_id" })
   userId: string;
 
   @Column({ type: "varchar", length: 255, nullable: false })
@@ -17,6 +17,6 @@ export class TodoEntity {
   @Column({ type: "boolean", default: false })
   status: boolean;
 
-  @Column({ type: "timestamp", nullable: true })
+  @Column({ type: "timestamp", nullable: true, name: "due_date" })
   dueDate: Date;
 }

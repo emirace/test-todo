@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity("user")
 export class UserEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn("uuid", { name: "user_id" })
   userId: string;
 
   @Column({ type: "varchar", length: 255, nullable: false })
@@ -14,6 +14,6 @@ export class UserEntity {
   @Column({ type: "varchar", length: 255, nullable: false })
   password: string;
 
-  @Column({ type: "boolean", default: false })
-  deletedAt: boolean;
+  @Column({ name: "deleted_at", type: "timestamp", nullable: true })
+  deletedAt: Date;
 }

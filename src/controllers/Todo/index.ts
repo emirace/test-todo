@@ -4,8 +4,10 @@ import { todoService } from "../../services";
 
 // Handler for creating a Todo
 const createTodoHandler = async (req, res) => {
+  const userId = req.user.userId;
+  console.log("userId", userId);
   const todoData = req.body;
-  const newTodo = await todoService.createTodo(todoData);
+  const newTodo = await todoService.createTodo(userId, todoData);
   if (!newTodo) {
     return res
       .status(httpStatus.BAD_REQUEST)
@@ -25,8 +27,8 @@ const getUserTodosHandler = async (req, res) => {
 
   // Extract query parameters for filtering and sorting
   const { status, title, dueDate, sortField, sortOrder } = req.query;
-
   // Build filters dynamically
+
   const filters: any = {};
   if (status !== undefined) filters.status = status === "true"; // Convert to boolean
   if (title) filters.title = title;
@@ -36,15 +38,10 @@ const getUserTodosHandler = async (req, res) => {
   const todos = await todoService.getTodosByUserId(
     userId,
     filters,
-    sortField || "createdAt", // Default sorting field
-    sortOrder || "ASC" // Default sorting order
+    sortField || "createdAt",
+    sortOrder || "ASC"
   );
 
-  if (!todos || todos.length === 0) {
-    return res
-      .status(httpStatus.NOT_FOUND)
-      .json({ message: "No todos found for this user" });
-  }
   res.status(httpStatus.OK).json(todos);
 };
 

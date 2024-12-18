@@ -19,11 +19,13 @@ interface UpdateTodoInput {
 }
 
 export const createTodo = async (
+  userId: string,
   data: CreateTodoInput
 ): Promise<TodoEntity> => {
   const todoRepository = AppDataSouce.getRepository(TodoEntity);
 
   const todo = todoRepository.create({
+    userId,
     ...data,
     status: data.status || false, // Default status to false if not provided
   });
@@ -48,9 +50,23 @@ export const getTodosByUserId = async (
   // Build the query options dynamically
   const where: FindOptionsWhere<TodoEntity> = { userId, ...filters };
 
+  if (
+    ![
+      "todoid",
+      "userId",
+      "title",
+      "description",
+      "status",
+      "dueDate",
+      "createdAt",
+    ].includes(sortField)
+  ) {
+    throw new Error(`Invalid sort field: ${sortField}`);
+  }
+
   const options: FindManyOptions<TodoEntity> = {
     where,
-    order: { [sortField]: sortOrder.toUpperCase() === "ASC" ? "ASC" : "DESC" },
+    // order: { [sortField]: sortOrder.toUpperCase() === "ASC" ? "ASC" : "DESC" },
   };
 
   // Execute the query
