@@ -70,10 +70,10 @@ function Signin() {
           <div className="w-full max-w-sm">
             {/* Email Input */}
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Email</label>
+              <label className="block text-sm font-medium mb-2">Username</label>
               <input
                 type="text"
-                placeholder="johndoe@gmail.com"
+                placeholder="Enter username"
                 className="w-full h-12 p-4 border rounded-lg focus:ring-2 focus:ring-red-500"
                 onChange={(e) =>
                   setPostInputs({ ...postInputs, email: e.target.value })
